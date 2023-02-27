@@ -1,17 +1,37 @@
-from os import path
 from time import sleep
-from paramiko import SSHClient, AutoAddPolicy
+import argparse
+import ssh_connection_manage
+
+def pars_args():
+    global host
+    global port
+    global known_hosts_file
+    global username
+    global password
+
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("--host", type=str, help="Host to connect")
+    arg_parser.add_argument("-p", "--port", type=int, help="Port")
+    arg_parser.add_argument("-u", "--username", type=str, help="username")
+    arg_parser.add_argument("-P", "--password", type=str, help="password")
+    arg_parser.add_argument("-H", "--known-hosts", type=str, help="the known_hosts file path")
+
+    opt = arg_parser.parse_args()
+
+    host = opt.host
+    port = opt.port
+    username = opt.username
+    password = opt.password
+    known_hosts_file = opt.known_hosts if opt.known_hosts != None else "~/.ssh/known_hosts"
 
 
-client = SSHClient()
-client.load_system_host_keys()
-client.load_host_keys(path.expanduser('~/.ssh/known_hosts'))
-client.set_missing_host_key_policy(AutoAddPolicy())
 
-client.connect("127.0.0.1", username='root', password='admin', port=2222)
 
-print("connecting ...")
+if __name__ == "__main__":
+    
+    pars_args()
+    ssh_connection = ssh_connection_manage.ssh_connect(host, username, password, known_hosts_file, port)
+    print("Connect to server!")
+    sleep(3)
+    ssh_connection.close()
 
-sleep(1)
-
-client.close()
