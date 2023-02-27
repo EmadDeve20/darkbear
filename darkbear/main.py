@@ -19,7 +19,7 @@ def pars_args():
     opt = arg_parser.parse_args()
 
     host = opt.host
-    port = opt.port if opt.port != None else 22 
+    port = opt.port
     username = opt.username
     password = opt.password
     known_hosts_file = opt.known_hosts
