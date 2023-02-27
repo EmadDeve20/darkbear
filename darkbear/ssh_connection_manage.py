@@ -1,7 +1,7 @@
 from os import path
 from paramiko import SSHClient, AutoAddPolicy
 
-def ssh_connect(host: str, username: str, password: str,  known_host_file: str, port: int=22) -> SSHClient:
+def ssh_connect(host: str, port: int, username: str, password: str, known_host_file: str) -> SSHClient:
     
     client = SSHClient()
     client.load_system_host_keys()
