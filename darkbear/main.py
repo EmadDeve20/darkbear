@@ -11,18 +11,18 @@ def pars_args():
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--host", type=str, help="Host to connect")
-    arg_parser.add_argument("-p", "--port", type=int, help="Port")
+    arg_parser.add_argument("-p", "--port", type=int, default=22, help="Port")
     arg_parser.add_argument("-u", "--username", type=str, help="username")
     arg_parser.add_argument("-P", "--password", type=str, help="password")
-    arg_parser.add_argument("-H", "--known-hosts", type=str, help="the known_hosts file path")
+    arg_parser.add_argument("-H", "--known-hosts", type=str, default="~/.ssh/known_hosts", help="the known_hosts file path")
 
     opt = arg_parser.parse_args()
 
     host = opt.host
-    port = opt.port
+    port = opt.port if opt.port != None else 22 
     username = opt.username
     password = opt.password
-    known_hosts_file = opt.known_hosts if opt.known_hosts != None else "~/.ssh/known_hosts"
+    known_hosts_file = opt.known_hosts
 
 
 
