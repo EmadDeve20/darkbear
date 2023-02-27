@@ -30,7 +30,7 @@ def pars_args():
 if __name__ == "__main__":
     
     pars_args()
-    ssh_connection = ssh_connection_manage.ssh_connect(host, username, password, known_hosts_file, port)
+    ssh_connection = ssh_connection_manage.ssh_connect(host, port, username, password, known_hosts_file)
     print("Connect to server!")
     sleep(3)
     ssh_connection.close()
