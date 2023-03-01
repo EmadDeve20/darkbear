@@ -26,9 +26,9 @@ class Tester:
         """
 
         output = output.split(" ")
-        if output[3] == "1000" and output[-1] == ".":
-            if  output[4] == "100" and output[-1] == "..":
-                return True
+        print("output: ", output)
+        if output[4] == "1000" and output[5] == "100":
+            return True
         return False
 
 
