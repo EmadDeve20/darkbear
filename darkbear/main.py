@@ -18,6 +18,7 @@ def pars_args():
     global known_hosts_file
     global username
     global password
+    global verbose
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--host", type=str, help="Host to connect")
@@ -25,6 +26,7 @@ def pars_args():
     arg_parser.add_argument("-u", "--username", type=str, help="username")
     arg_parser.add_argument("-P", "--password", type=str, help="password")
     arg_parser.add_argument("-H", "--known-hosts", type=str, default="~/.ssh/known_hosts", help="the known_hosts file path")
+    arg_parser.add_argument("--verbose", action="store_true", default=False, help="print all of commands and outputs")
 
     opt = arg_parser.parse_args()
 
@@ -33,6 +35,7 @@ def pars_args():
     username = opt.username
     password = opt.password
     known_hosts_file = opt.known_hosts
+    verbose = opt.verbose
 
 
 
@@ -49,6 +52,6 @@ if __name__ == "__main__":
     print("Connect to server!")
     
     
-    command_sender =  CommandSender(ssh_connection)
+    command_sender =  CommandSender(ssh_connection, verbose)
     command_sender.run()
 
