@@ -6,6 +6,32 @@ commands = [
     " ls -lia\n",
 ]
 
+class Tester:
+    """
+    A Class With all of the Methods Test about whether the server is a honeypot or not!
+    """
+    def test(self, cmd: str, output: str):
+        """
+        test function
+        """
+        if cmd == commands[0]:
+            pass
+        if cmd == commands[1]:
+            return self.test_is_chrooted(output)
+
+    def test_is_chrooted(self, output: str) -> bool:
+        """
+        the server chrooted?
+        return: true if schrooted
+        """
+
+        output = output.split(" ")
+        if output[3] == "1000" and output[-1] == ".":
+            if  output[4] == "100" and output[-1] == "..":
+                return True
+        return False
+
+
 class CommandSender:
     def __init__(self, ssh_client: SSHClient) -> None:
         self.ssh_client = ssh_client
@@ -13,6 +39,7 @@ class CommandSender:
         self.channel = transport.open_session()
         self.channel.get_pty()
         self.channel.invoke_shell()
+        self.tester = Tester()
         
         print("\nTHE SERVER MESSAGE: ")
         print(self.get_server_msg)
@@ -46,7 +73,8 @@ class CommandSender:
 
             self.channel.send(cmd)
             sleep(5)
-            stdout = self.channel.recv(-1)
+            stdout = self.channel.recv(-1).decode()
             print(f"stdin: {cmd}")
-            print(f"stdout: {stdout.decode()}")
+            print(f"stdout: {stdout}")
+            print(self.tester.test(cmd, stdout))
 
