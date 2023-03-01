@@ -11,6 +11,7 @@ def help():
     print("-P or --password password")
     print("-H or --known-hosts public key file default=~/.ssh/known_hosts")
     print("-h or --help Help")
+    print("--verbose do print all of commands and outputs")
 
 def pars_args():
     global host
