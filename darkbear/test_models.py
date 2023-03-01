@@ -46,7 +46,6 @@ class CommandSender:
         print("\nSERVER NAME:")
         print(self.get_server_name)
 
-    # TODO: I Tested this function on my ubuntu server and I saw this function can not print all of my server messages!
     @property
     def get_server_msg(self) -> str:
         """
@@ -57,7 +56,7 @@ class CommandSender:
         server_msg = self.channel.recv(-1).decode()
         sleep(1)
         server_msg += self.channel.recv(-1).decode()
-        return self.cut_the_useless_lines(server_msg)
+        return self.cut_the_useless_lines(server_msg, _from=0, usless_char="\r")
 
     @property
     def get_server_name(self) -> str:
@@ -70,13 +69,13 @@ class CommandSender:
         sleep(1)
         return self.cut_the_useless_lines(self.channel.recv(-1).decode())
 
-    def cut_the_useless_lines(self, output: str) -> str:
+    def cut_the_useless_lines(self, output: str, _from: int = 1, _to:int = -1, usless_char: str = "\n") -> str:
         """
         cut the first line (your sned command)
         return: everything after first line
         """
 
-        output = output.split("\n")[1:-1]
+        output = output.split(usless_char)[_from:_to]
         return "".join(output)
 
     def run(self):
