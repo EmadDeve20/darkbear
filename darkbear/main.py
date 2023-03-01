@@ -54,5 +54,8 @@ if __name__ == "__main__":
     
     
     command_sender =  CommandSender(ssh_connection, verbose)
-    command_sender.run()
-
+    
+    try:
+        command_sender.run()
+    except KeyboardInterrupt:
+        pass
