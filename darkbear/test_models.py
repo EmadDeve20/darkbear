@@ -46,6 +46,7 @@ class CommandSender:
         print("\nSERVER NAME:")
         print(self.get_server_name)
 
+    # TODO: I Tested this function on my ubuntu server and I saw this function can not print all of my server messages!
     @property
     def get_server_msg(self) -> str:
         """
@@ -53,8 +54,10 @@ class CommandSender:
         return: messgae
         """
 
-        return self.channel.recv(-1).decode()
-
+        server_msg = self.channel.recv(-1).decode()
+        sleep(1)
+        server_msg += self.channel.recv(-1).decode()
+        return self.cut_the_useless_lines(server_msg)
 
     @property
     def get_server_name(self) -> str:
