@@ -2,8 +2,8 @@ from time import sleep
 from paramiko import SSHClient, transport
 
 commands = [
-    " apt search tmux",
-    " ls -lia",
+    " apt search tmux\n",
+    " ls -lia\n",
 ]
 
 class CommandSender:
@@ -36,7 +36,7 @@ class CommandSender:
         return: server_name
         """
 
-        self.channel.send("uname -a\n")
+        self.channel.send(" uname -a\n")
         sleep(1)
         return self.channel.recv(-1).decode()
 
@@ -46,7 +46,7 @@ class CommandSender:
 
             self.channel.send(cmd)
             sleep(5)
-            stdout = self.channel.recv(9999)
+            stdout = self.channel.recv(-1)
             print(f"stdin: {cmd}")
             print(f"stdout: {stdout.decode()}")
 
