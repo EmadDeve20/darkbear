@@ -65,7 +65,16 @@ class CommandSender:
 
         self.channel.send(" uname -a\n")
         sleep(1)
-        return self.channel.recv(-1).decode()
+        return self.cut_the_useless_lines(self.channel.recv(-1).decode())
+
+    def cut_the_useless_lines(self, output: str) -> str:
+        """
+        cut the first line (your sned command)
+        return: everything after first line
+        """
+
+        output = output.split("\n")[1:-1]
+        return "".join(output)
 
     def run(self):
 
@@ -76,5 +85,5 @@ class CommandSender:
             stdout = self.channel.recv(-1).decode()
             print(f"stdin: {cmd}")
             print(f"stdout: {stdout}")
-            print(self.tester.test(cmd, stdout))
+            print(self.tester.test(cmd, self.cut_the_useless_lines(stdout)))
 
