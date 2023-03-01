@@ -33,8 +33,9 @@ class Tester:
 
 
 class CommandSender:
-    def __init__(self, ssh_client: SSHClient) -> None:
+    def __init__(self, ssh_client: SSHClient, verbose:bool = False) -> None:
         self.ssh_client = ssh_client
+        self.verbose = verbose
         transport = self.ssh_client.get_transport()
         self.channel = transport.open_session()
         self.channel.get_pty()
@@ -85,7 +86,7 @@ class CommandSender:
             self.channel.send(cmd)
             sleep(5)
             stdout = self.channel.recv(-1).decode()
-            print(f"stdin: {cmd}")
-            print(f"stdout: {stdout}")
+            if self.verbose:
+                print(stdout)
             print(self.tester.test(cmd, self.cut_the_useless_lines(stdout)))
 
