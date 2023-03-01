@@ -1,6 +1,6 @@
-from time import sleep
 import argparse
 import ssh_connection_manage
+from test_models import CommandSender
 
 def pars_args():
     global host
@@ -32,6 +32,8 @@ if __name__ == "__main__":
     pars_args()
     ssh_connection = ssh_connection_manage.ssh_connect(host, port, username, password, known_hosts_file)
     print("Connect to server!")
-    sleep(3)
-    ssh_connection.close()
+    
+    
+    command_sender =  CommandSender(ssh_connection)
+    command_sender.run()
 
