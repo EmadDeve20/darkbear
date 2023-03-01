@@ -1,6 +1,16 @@
 import argparse
 import ssh_connection_manage
 from test_models import CommandSender
+from sys import argv
+
+def help():
+    print("Usage: ")
+    print("--host IP address of server")
+    print("-p or --port port of server default=22")
+    print("-u or --username username")
+    print("-P or --password password")
+    print("-H or --known-hosts public key file default=~/.ssh/known_hosts")
+    print("-h or --help Help")
 
 def pars_args():
     global host
@@ -30,6 +40,11 @@ def pars_args():
 if __name__ == "__main__":
     
     pars_args()
+
+    if len(argv) == 1:
+        help()
+        exit(1)
+
     ssh_connection = ssh_connection_manage.ssh_connect(host, port, username, password, known_hosts_file)
     print("Connect to server!")
     
