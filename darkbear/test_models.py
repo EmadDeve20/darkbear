@@ -1,3 +1,4 @@
+from time import sleep
 from paramiko import SSHClient, transport
 
 commands = [
@@ -35,7 +36,8 @@ class CommandSender:
         return: server_name
         """
 
-        self.channel.send("uname -a")
+        self.channel.send("uname -a\n")
+        sleep(1)
         return self.channel.recv(-1).decode()
 
     def run(self):
@@ -43,7 +45,8 @@ class CommandSender:
         for cmd in commands:
 
             self.channel.send(cmd)
-            stdout = self.channel.recv(-1)
+            sleep(5)
+            stdout = self.channel.recv(9999)
             print(f"stdin: {cmd}")
             print(f"stdout: {stdout.decode()}")
 
