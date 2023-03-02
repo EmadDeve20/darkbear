@@ -58,9 +58,10 @@ class Tester:
         return len(self.report_lists) == 0
 
 class CommandSender:
-    def __init__(self, ssh_client: SSHClient, verbose:bool = False) -> None:
+    def __init__(self, ssh_client: SSHClient, verbose:bool = False, delay:int = 6) -> None:
         self.ssh_client = ssh_client
         self.verbose = verbose
+        self.delay = delay
         transport = self.ssh_client.get_transport()
         self.channel = transport.open_session()
         self.channel.get_pty()
@@ -109,7 +110,7 @@ class CommandSender:
         for cmd in commands:
 
             self.channel.send(cmd)
-            sleep(5)
+            sleep(self.delay)
             stdout = self.channel.recv(-1).decode()
             if self.verbose:
                 print(stdout)
