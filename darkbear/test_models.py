@@ -10,6 +10,7 @@ class Tester:
     """
     A Class With all of the Methods Test about whether the server is a honeypot or not!
     """
+    report_lists = []
     def test(self, cmd: str, output: str):
         """
         test function
@@ -19,17 +20,18 @@ class Tester:
         if cmd == commands[1]:
             return self.test_is_chrooted(output)
 
-    def test_is_chrooted(self, output: str) -> bool:
+    def test_is_chrooted(self, output: str):
         """
         the server chrooted?
-        return: true if schrooted
+        if chrooted add a report!
         """
 
+        report_type = "very suspicious"
+        report_message = "this is very suspicious because the current directory is chrooted!"
+
         output = output.split(" ")
-        print("output: ", output)
         if output[4] == "1000" and output[5] == "100":
-            return True
-        return False
+            self.report_lists.append({"type": report_type, "message": report_message})
 
 
 class CommandSender:
