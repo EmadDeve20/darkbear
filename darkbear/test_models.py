@@ -39,6 +39,11 @@ class Tester:
         """yield any report"""
         for report in self.report_lists:
             yield report 
+    
+    @property
+    def report_list_is_empty(self) -> bool:
+        """return true if the length of report_lists is 0 if not, return the false"""
+        return len(self.report_lists) == 0
 
 class CommandSender:
     def __init__(self, ssh_client: SSHClient, verbose:bool = False) -> None:
