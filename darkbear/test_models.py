@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from time import sleep
 from paramiko import SSHClient, transport
+from reporter import report
 
 commands = [
     " apt search tmux\n",
@@ -101,5 +102,10 @@ class CommandSender:
             stdout = self.channel.recv(-1).decode()
             if self.verbose:
                 print(stdout)
-            print(self.tester.test(cmd, self.cut_the_useless_lines(stdout)))
 
+        if not self.tester.report_list_is_empty:
+            for r in self.tester.reporter():
+                report(r["type"], r["message"])
+
+        else:
+            report("not found", "No suspicious items were found")
