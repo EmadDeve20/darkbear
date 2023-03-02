@@ -1,4 +1,5 @@
 from typing import Dict, List
+import re
 
 from time import sleep
 from paramiko import SSHClient, transport
@@ -19,9 +20,19 @@ class Tester:
         test function
         """
         if cmd == commands[0]:
-            pass
+            self.test_packagemanager_is_ok(output)
         if cmd == commands[1]:
             return self.test_is_chrooted(output)
+
+    def test_packagemanager_is_ok(self, output: str):
+        """check the package manager is working or not"""        
+
+        report_type = "suspicious"
+        report_message = "this server does not have a package manager! maybe this is a not real Linux like cowrie"
+
+        not_found = re.search("^.*apt.*command not found", output)
+        if not_found != None:
+            self.report_lists.append({"type": report_type, "message": report_message})
 
     def test_is_chrooted(self, output: str):
         """
@@ -102,6 +113,7 @@ class CommandSender:
             stdout = self.channel.recv(-1).decode()
             if self.verbose:
                 print(stdout)
+            self.tester.test(cmd, self.cut_the_useless_lines(stdout))
 
         if not self.tester.report_list_is_empty:
             for r in self.tester.reporter():
