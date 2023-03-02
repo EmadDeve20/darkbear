@@ -2,6 +2,7 @@ import argparse
 import ssh_connection_manage
 from test_models import CommandSender
 from sys import argv
+from paramiko.ssh_exception import NoValidConnectionsError
 
 def help():
     print("Usage: ")
@@ -49,9 +50,13 @@ if __name__ == "__main__":
         help()
         exit(1)
 
-    ssh_connection = ssh_connection_manage.ssh_connect(host, port, username, password, known_hosts_file)
-    print("Connect to server!")
-    
+    try:
+        ssh_connection = ssh_connection_manage.ssh_connect(host, port, username, password, known_hosts_file)
+        print("Connect to server!")
+    except NoValidConnectionsError as err:
+        print(err.strerror)
+        exit(1)
+
     
     command_sender =  CommandSender(ssh_connection, verbose)
     
