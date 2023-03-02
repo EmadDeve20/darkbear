@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from time import sleep
 from paramiko import SSHClient, transport
 
@@ -10,7 +12,7 @@ class Tester:
     """
     A Class With all of the Methods Test about whether the server is a honeypot or not!
     """
-    report_lists = []
+    report_lists:List[Dict] = []
     def test(self, cmd: str, output: str):
         """
         test function
@@ -33,6 +35,10 @@ class Tester:
         if output[4] == "1000" and output[5] == "100":
             self.report_lists.append({"type": report_type, "message": report_message})
 
+    def reporter(self) -> Dict:
+        """yield any report"""
+        for report in self.report_lists:
+            yield report 
 
 class CommandSender:
     def __init__(self, ssh_client: SSHClient, verbose:bool = False) -> None:
