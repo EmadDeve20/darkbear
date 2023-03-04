@@ -123,6 +123,8 @@ class CommandSender:
 
     def run(self):
 
+        current_report_index = 0
+
         for cmd in commands:
 
             self.channel.send(cmd)
@@ -131,10 +133,16 @@ class CommandSender:
             if self.verbose:
                 print(stdout)
             self.tester.test(cmd, self.cut_the_useless_lines(stdout))
+            
+            if self.sync and self.tester.report_lists[current_report_index] != None:
+                print(f"current_report_index: {current_report_index}")
+                report(self.tester.report_lists[current_report_index]["type"], 
+                       self.tester.report_lists[current_report_index]["message"])
 
-        if not self.tester.report_list_is_empty:
+
+        if not self.tester.report_list_is_empty and not self.sync:
             for r in self.tester.reporter():
                 report(r["type"], r["message"])
 
-        else:
+        elif self.tester.report_list_is_empty:
             report("not found", "No suspicious items were found")
