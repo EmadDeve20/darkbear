@@ -15,7 +15,7 @@ def help():
     print("--verbose do print all of commands and outputs")
     print("-d [number] or --delay [number] delay receiving after sending a command default = 6")
     print("the delay must be greater than 6!")
-    print("-s or --sync")
+    print("-s or --sync", end=" ")
     print("The sync argument makes it pass the suspicious item as soon as it sees it and does not wait until the last test method")
 
 def pars_args():
