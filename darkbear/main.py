@@ -17,7 +17,7 @@ def help():
     print("the delay must be greater than 6!")
     print("-s or --sync", end=" ")
     print("The sync argument makes it pass the suspicious item as soon as it sees it and does not wait until the last test method")
-    print("-b or --break for break policy")
+    print("-b or --break-policy for break policy")
     print("the policy of breaking script when found a something suspicious [a|s|vs]", end=" ")
     print("a = any s = suspicious vs = very suspicious")
 
@@ -30,6 +30,7 @@ def pars_args():
     global verbose
     global delay
     global sync
+    global break_policy
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--host", type=str, help="Host to connect")
@@ -40,7 +41,7 @@ def pars_args():
     arg_parser.add_argument("--verbose", action="store_true", default=False, help="print all of commands and outputs")
     arg_parser.add_argument("-d", "--delay", type=int, default=6, help="delay receiving after sending a command default = 6")
     arg_parser.add_argument("-s", "--sync", action="store_true", default=False, help="As soon as you see something suspicious, display it")
-    arg_parser.add_argument("-b", "--break", choices=["a", "s", "vs"], help="the policy of breaking script when found something suspicious [a|s|vs]")
+    arg_parser.add_argument("-b", "--break-policy", choices=["a", "s", "vs"], default=None, help="the policy of breaking script when found something suspicious [a|s|vs]")
 
     opt = arg_parser.parse_args()
 
@@ -52,6 +53,7 @@ def pars_args():
     verbose = opt.verbose
     delay = opt.delay
     sync = opt.sync
+    break_policy = opt.break_policy
 
     if (delay < 6):
         print("the delay must be greater than 6!")
@@ -75,7 +77,7 @@ if __name__ == "__main__":
         exit(1)
 
     
-    command_sender =  CommandSender(ssh_connection, verbose, delay, sync)
+    command_sender =  CommandSender(ssh_connection, verbose, delay, sync, break_policy)
     
     try:
         command_sender.run()
