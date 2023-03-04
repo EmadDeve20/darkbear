@@ -15,6 +15,7 @@ class Tester:
     A Class With all of the Methods Test about whether the server is a honeypot or not!
     """
     report_lists:List[Dict] = []
+    last_report:Dict = None
     def test(self, cmd: str, output: str):
         """
         test function
@@ -29,10 +30,12 @@ class Tester:
 
         report_type = "suspicious"
         report_message = "this server does not have a package manager! maybe this is a not real Linux like cowrie"
+        report = {"type": report_type, "message": report_message}
 
         not_found = re.search("^.*apt.*command not found", output)
         if not_found != None:
-            self.report_lists.append({"type": report_type, "message": report_message})
+            self.report_lists.append(report)
+            self.__append_to_last_report(report)
 
     def test_is_chrooted(self, output: str):
         """
@@ -42,10 +45,22 @@ class Tester:
 
         report_type = "very suspicious"
         report_message = "this is very suspicious because the current directory is chrooted!"
+        report = {"type": report_type, "message": report_message}
 
         output = output.split(" ")
         if output[4] == "1000" and output[5] == "100":
-            self.report_lists.append({"type": report_type, "message": report_message})
+            self.report_lists.append(report)
+            self.__append_to_last_report(report)
+
+    def __append_to_last_report(self, report:Dict):
+        self.last_report = report
+    
+    @property
+    def get_last_report(self) -> Dict:
+        """ return the last report and delete it for self """
+        
+        return self.last_report
+        self.last_report = None
 
     def reporter(self) -> Dict:
         """yield any report"""
