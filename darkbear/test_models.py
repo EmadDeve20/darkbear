@@ -99,7 +99,7 @@ class CommandSender:
         self.verbose = verbose
         self.delay = delay
         self.sync = sync
-        self.break_policy = None
+        self.break_policy = break_policy
         transport = self.ssh_client.get_transport()
         self.channel = transport.open_session()
         self.channel.get_pty()
@@ -155,6 +155,15 @@ class CommandSender:
             if self.verbose:
                 print(stdout)
             self.tester.test(cmd, self.cut_the_useless_lines(stdout))
+
+            if self.break_policy == "a" and not self.tester.report_list_is_empty:
+                break
+
+            if self.break_policy == "vs" and self.tester.have_a_verysuspicious_report:
+                break
+
+            if self.break_policy == "s" and self.tester.have_a_suspicious_report:
+                break
             
             if self.sync and self.tester.report_lists[current_report_index] != None:
                 print(f"current_report_index: {current_report_index}")
