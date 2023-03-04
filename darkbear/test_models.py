@@ -93,11 +93,13 @@ class Tester:
 
 
 class CommandSender:
-    def __init__(self, ssh_client: SSHClient, verbose:bool = False, delay:int = 6, sync:bool = False) -> None:
+    def __init__(self, ssh_client: SSHClient, verbose:bool = False, delay:int = 6, sync:bool = False,
+                break_policy:str = None) -> None:
         self.ssh_client = ssh_client
         self.verbose = verbose
         self.delay = delay
         self.sync = sync
+        self.break_policy = None
         transport = self.ssh_client.get_transport()
         self.channel = transport.open_session()
         self.channel.get_pty()
