@@ -15,6 +15,8 @@ def help():
     print("--verbose do print all of commands and outputs")
     print("-d [number] or --delay [number] delay receiving after sending a command default = 6")
     print("the delay must be greater than 6!")
+    print("-s or --sync")
+    print("The sync argument makes it pass the suspicious item as soon as it sees it and does not wait until the last test method")
 
 def pars_args():
     global host
@@ -24,6 +26,7 @@ def pars_args():
     global password
     global verbose
     global delay
+    global sync
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--host", type=str, help="Host to connect")
@@ -33,6 +36,7 @@ def pars_args():
     arg_parser.add_argument("-H", "--known-hosts", type=str, default="~/.ssh/known_hosts", help="the known_hosts file path")
     arg_parser.add_argument("--verbose", action="store_true", default=False, help="print all of commands and outputs")
     arg_parser.add_argument("-d", "--delay", type=int, default=6, help="delay receiving after sending a command default = 6")
+    arg_parser.add_argument("-s", "--sync", action="store_true", default=False, help="As soon as you see something suspicious, display it")
 
     opt = arg_parser.parse_args()
 
@@ -43,6 +47,7 @@ def pars_args():
     known_hosts_file = opt.known_hosts
     verbose = opt.verbose
     delay = opt.delay
+    sync = opt.sync
 
     if (delay < 6):
         print("the delay must be greater than 6!")
@@ -66,7 +71,7 @@ if __name__ == "__main__":
         exit(1)
 
     
-    command_sender =  CommandSender(ssh_connection, verbose, delay)
+    command_sender =  CommandSender(ssh_connection, verbose, delay, sync)
     
     try:
         command_sender.run()
