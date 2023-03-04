@@ -72,6 +72,15 @@ class Tester:
         """return true if the length of report_lists is 0 if not, return the false"""
         return len(self.report_lists) == 0
 
+    @property
+    def have_a_suspicious_report(self) -> bool:
+        """Do we have a suspicious report? return true if we have"""
+
+        for r in self.last_report:
+            if r["type"] == "suspicious":
+                return True
+        return False
+
 class CommandSender:
     def __init__(self, ssh_client: SSHClient, verbose:bool = False, delay:int = 6, sync:bool = False) -> None:
         self.ssh_client = ssh_client
