@@ -76,7 +76,7 @@ class Tester:
     def have_a_suspicious_report(self) -> bool:
         """Do we have a suspicious report? return true if we have"""
 
-        for r in self.last_report:
+        for r in self.report_lists:
             if r["type"] == "suspicious":
                 return True
         return False
@@ -85,7 +85,7 @@ class Tester:
     def have_a_verysuspicious_report(self) -> bool:
         """Do we have a very suspicious report? return true if we have"""
 
-        for r in self.last_report:
+        for r in self.report_lists:
             if r["type"] == "very suspicious":
                 return True
         return False
