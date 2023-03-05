@@ -9,6 +9,8 @@ authors = [
     {name = "EmadDeve20", email = "EmadDeve20@gmail.com"}
 ]
 
+readme = "README.md"
+
 maintainers = [
     {name="EmadDeve20", email = "EmadDeve20@gmail.com"},
 ]
