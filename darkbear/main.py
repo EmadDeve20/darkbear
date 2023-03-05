@@ -59,10 +59,8 @@ def pars_args():
         print("the delay must be greater than 6!")
         exit(1)
 
+def run():
 
-
-if __name__ == "__main__":
-    
     pars_args()
 
     if len(argv) == 1:
@@ -83,3 +81,7 @@ if __name__ == "__main__":
         command_sender.run()
     except KeyboardInterrupt:
         pass
+
+if __name__ == "__main__":
+    run()
+    
