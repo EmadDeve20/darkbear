@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "darkbear"
+version = "0.0.1"
+authors = [
+    {name = "EmadDeve20", email = "EmadDeve20@gmail.com"}
+]
+
+maintainers = [
+    {name="EmadDeve20", email = "EmadDeve20@gmail.com"},
+]
+
+license = {file="LICENSE"}
+
+
+requires-python = ">=3.7, < 4"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+dependencies = [
+    "paramiko==2.9.3",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/EmadDeve20/darkbear"
+"Bug Tracker" = "https://github.com/EmadDeve20/darkbear/issues"
+
+[project.scripts]
+darkbear = "darkbear.main"
+
