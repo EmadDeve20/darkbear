@@ -35,5 +35,5 @@ dependencies = [
 "Bug Tracker" = "https://github.com/EmadDeve20/darkbear/issues"
 
 [project.scripts]
-darkbear = "darkbear.main"
+darkbear = "darkbear.main:run"
 
