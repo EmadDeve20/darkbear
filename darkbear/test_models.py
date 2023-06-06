@@ -119,7 +119,7 @@ class CommandSender:
         """
 
         server_msg = self.channel.recv(-1).decode()
-        sleep(1)
+        sleep(self.delay)
         server_msg += self.channel.recv(-1).decode()
         return self.cut_the_useless_lines(server_msg, _from=0, usless_char="\r")
 
@@ -131,7 +131,7 @@ class CommandSender:
         """
 
         self.channel.send(" uname -a\n")
-        sleep(1)
+        sleep(self.delay)
         return self.cut_the_useless_lines(self.channel.recv(-1).decode())
 
     def cut_the_useless_lines(self, output: str, _from: int = 1, _to:int = -1, usless_char: str = "\n") -> str:
