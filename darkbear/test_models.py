@@ -4,6 +4,7 @@ import re
 from time import sleep
 from paramiko import SSHClient, transport
 from reporter import report
+import output_messages
 
 commands = [
     " apt search tmux\n",
@@ -28,14 +29,10 @@ class Tester:
     def test_packagemanager_is_ok(self, output: str):
         """check the package manager is working or not"""        
 
-        report_type = "suspicious"
-        report_message = "this server does not have a package manager! maybe this is a not real Linux like cowrie"
-        report = {"type": report_type, "message": report_message}
-
         not_found = re.search("^.*apt.*command not found", output)
         if not_found != None:
-            self.report_lists.append(report)
-            self.__append_to_last_report(report)
+            self.report_lists.append(output_messages.reports_types["package_manager_test"])
+            self.__append_to_last_report(output_messages.reports_types["package_manager_test"])
 
     def test_is_chrooted(self, output: str):
         """
@@ -43,14 +40,10 @@ class Tester:
         if chrooted add a report!
         """
 
-        report_type = "very suspicious"
-        report_message = "this is very suspicious because the current directory is chrooted!"
-        report = {"type": report_type, "message": report_message}
-
         output = output.split(" ")
         if output[4] == "1000" and output[5] == "100":
-            self.report_lists.append(report)
-            self.__append_to_last_report(report)
+            self.report_lists.append(output_messages.reports_types["chrooted_test"])
+            self.__append_to_last_report(output_messages.reports_types["chrooted_test"])
 
     def __append_to_last_report(self, report:Dict):
         self.last_report = report
@@ -168,12 +161,12 @@ class CommandSender:
             if self.sync and self.tester.report_lists[current_report_index] != None:
                 print(f"current_report_index: {current_report_index}")
                 report(self.tester.report_lists[current_report_index]["type"], 
-                       self.tester.report_lists[current_report_index]["message"])
+                       self.tester.report_lists[current_report_index]["description"])
 
 
         if not self.tester.report_list_is_empty and not self.sync:
             for r in self.tester.reporter():
-                report(r["type"], r["message"])
+                report(r["type"], r["description"])
 
         elif self.tester.report_list_is_empty:
             report("not found", "No suspicious items were found")
