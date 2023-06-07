@@ -7,8 +7,9 @@ from reporter import report
 import output_messages
 
 commands = [
-    " apt search tmux\n",
-    " ls -lia\n",
+    " apt search tmux\n", # package manager test TODO: this command must change for the current distribution
+    " ls -lia\n", # chroot test
+    "ifconfig || ip addr s" # check network mac address is for a virtual machine or not!
 ]
 
 class Tester:
