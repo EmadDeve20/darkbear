@@ -9,7 +9,7 @@ import output_messages
 commands = [
     " apt search tmux\n", # package manager test TODO: this command must change for the current distribution
     " ls -lia\n", # chroot test
-    "ifconfig || ip addr s" # check network mac address is for a virtual machine or not!
+    " ifconfig || ip addr s" # check network mac address is for a virtual machine or not!
 ]
 
 class Tester:
@@ -26,6 +26,7 @@ class Tester:
             self.test_packagemanager_is_ok(output)
         if cmd == commands[1]:
             return self.test_is_chrooted(output)
+        # TODO : use the test_it_is_a_virtual_machine function
 
     def test_packagemanager_is_ok(self, output: str):
         """check the package manager is working or not"""        
@@ -45,6 +46,14 @@ class Tester:
         if output[4] == "1000" and output[5] == "100":
             self.report_lists.append(output_messages.reports_types["chrooted_test"])
             self.__append_to_last_report(output_messages.reports_types["chrooted_test"])
+
+    def test_it_is_a_virtual_machine(self, output: str):
+
+        vmware_mac_address_group = "(00:05:69:..:..:..|00:0C:29:..:..:..|00:50:56:..:..:..)"
+
+        if re.match(f".*{vmware_mac_address_group}.*", output):
+            # TODO: It is highly suspected to be a honeypot
+            pass
 
     def __append_to_last_report(self, report:Dict):
         self.last_report = report
