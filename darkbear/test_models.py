@@ -48,7 +48,7 @@ class Tester:
             self.report_lists.append(output_messages.reports_types["chrooted_test"])
             self.__append_to_last_report(output_messages.reports_types["chrooted_test"])
 
-    def test_it_is_a_virtual_machine(self, output: str):
+    def test_it_is_a_virtual_machine_with_mac(self, output: str):
 
         vmware_mac_address_group = "(00:05:69:..:..:..|00:0C:29:..:..:..|00:50:56:..:..:..)"
 
