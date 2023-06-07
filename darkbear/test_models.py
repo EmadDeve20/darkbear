@@ -27,7 +27,10 @@ class Tester:
             self.test_packagemanager_is_ok(output)
         if cmd == commands[1]:
             return self.test_is_chrooted(output)
-        # TODO : use the test_it_is_a_virtual_machine function
+        if cmd == commands[2]:
+            self.test_it_is_a_virtual_machine_with_mac(output)
+        if cmd == commands[3]:
+            self.test_whether_usb_names_refer_to_virtual_or_not(output)
 
     def test_packagemanager_is_ok(self, output: str):
         """check the package manager is working or not"""        
