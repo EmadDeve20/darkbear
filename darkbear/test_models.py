@@ -55,6 +55,12 @@ class Tester:
         if re.match(f".*{vmware_mac_address_group}.*", output):
             # TODO: It is highly suspected to be a honeypot
             pass
+    
+    def test_whether_usb_names_refer_to_virtual_or_not(self, output: str):
+
+        if re.match(".*(Virtual|VMware).*", output, re.IGNORECASE):
+            # TODO: It is highly suspected to be a honeypot
+            pass
 
     def __append_to_last_report(self, report:Dict):
         self.last_report = report
