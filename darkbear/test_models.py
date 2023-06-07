@@ -9,7 +9,8 @@ import output_messages
 commands = [
     " apt search tmux\n", # package manager test TODO: this command must change for the current distribution
     " ls -lia\n", # chroot test
-    " ifconfig || ip addr s" # check network mac address is for a virtual machine or not!
+    " ifconfig || ip addr s", # check network mac address is for a virtual machine or not!
+    " lsusb", # check if a USB name Like Virtual or VMware
 ]
 
 class Tester:
