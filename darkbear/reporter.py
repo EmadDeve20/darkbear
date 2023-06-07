@@ -1,4 +1,4 @@
-class Colors:
+class FontColors:
     RED = "\033[91m"
     YELLOW = "\033[33m"
     WHITE = "\033[97m"
@@ -8,8 +8,8 @@ class Colors:
 def report(rep_type: str, messgae: str):
     
     if rep_type == "suspicious":
-        print(f"[{Colors.YELLOW}{rep_type}{Colors.DEFAULT}] {Colors.WHITE}{messgae}{Colors.DEFAULT}")
+        print(f"[{FontColors.YELLOW}{rep_type}{FontColors.DEFAULT}] {FontColors.WHITE}{messgae}{FontColors.DEFAULT}")
     if rep_type == "very suspicious":
-        print(f"[{Colors.RED}{rep_type}{Colors.DEFAULT}] {Colors.WHITE}{messgae}{Colors.DEFAULT}")
+        print(f"[{FontColors.RED}{rep_type}{FontColors.DEFAULT}] {FontColors.WHITE}{messgae}{FontColors.DEFAULT}")
     if rep_type == "not found":
-        print(f"[{Colors.GREEN}{rep_type}{Colors.DEFAULT}] {Colors.WHITE}{messgae}{Colors.DEFAULT}")
+        print(f"[{FontColors.GREEN}{rep_type}{FontColors.DEFAULT}] {FontColors.WHITE}{messgae}{FontColors.DEFAULT}")
