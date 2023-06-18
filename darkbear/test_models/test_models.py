@@ -56,6 +56,7 @@ class Tester:
             if not re.match(".*\n$", command):
                 command = f"{command}\n"
 
+        return command
             
 
 
