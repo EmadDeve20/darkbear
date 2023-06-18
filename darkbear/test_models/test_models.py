@@ -3,8 +3,8 @@ import re
 
 from time import sleep
 from paramiko import SSHClient, transport
-from reporter import report
-import output_messages
+from darkbear.logger.logger import report
+import darkbear.logger.std_suspicious_message as std_suspicious_message
 
 commands = [
     " apt search tmux\n", # package manager test TODO: this command must change for the current distribution
@@ -85,8 +85,8 @@ class Tester:
 
         not_found = re.search("^.*apt.*command not found", output)
         if not_found != None:
-            self.report_lists.append(output_messages.reports_types["package_manager_test"])
-            self.__append_to_last_report(output_messages.reports_types["package_manager_test"])
+            self.report_lists.append(std_suspicious_message.reports_types["package_manager_test"])
+            self.__append_to_last_report(std_suspicious_message.reports_types["package_manager_test"])
 
     def test_is_chrooted(self, output: str):
         """
@@ -96,22 +96,22 @@ class Tester:
 
         output = output.split(" ")
         if output[4] == "1000" and output[5] == "100":
-            self.report_lists.append(output_messages.reports_types["chrooted_test"])
-            self.__append_to_last_report(output_messages.reports_types["chrooted_test"])
+            self.report_lists.append(std_suspicious_message.reports_types["chrooted_test"])
+            self.__append_to_last_report(std_suspicious_message.reports_types["chrooted_test"])
 
     def test_it_is_a_virtual_machine_with_mac(self, output: str):
 
         vmware_mac_address_group = "(00:05:69:..:..:..|00:0C:29:..:..:..|00:50:56:..:..:..)"
 
         if re.match(f".*{vmware_mac_address_group}.*", output):
-            self.report_lists.append(output_messages.reports_types["network_macaddress_test"])
-            self.__append_to_last_report(output_messages.reports_types["network_macaddress_test"])
+            self.report_lists.append(std_suspicious_message.reports_types["network_macaddress_test"])
+            self.__append_to_last_report(std_suspicious_message.reports_types["network_macaddress_test"])
     
     def test_whether_usb_names_refer_to_virtual_or_not(self, output: str):
 
         if re.match(".*(Virtual|VMware).*", output, re.IGNORECASE):
-            self.report_lists.append(output_messages.reports_types["usb_virtual_machine_test"])
-            self.__append_to_last_report(output_messages.reports_types["usb_virtual_machine_test"])
+            self.report_lists.append(std_suspicious_message.reports_types["usb_virtual_machine_test"])
+            self.__append_to_last_report(std_suspicious_message.reports_types["usb_virtual_machine_test"])
 
     def __append_to_last_report(self, report:Dict):
         self.last_report = report
