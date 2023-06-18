@@ -1,6 +1,6 @@
 import argparse
 import ssh_connection_manage
-from test_models import CommandSender
+from darkbear.test_models.test_models import CommandSender
 from sys import argv
 from paramiko.ssh_exception import NoValidConnectionsError
 
