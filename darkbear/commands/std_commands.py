@@ -1,0 +1,1 @@
+chroot_test_command = " ls -lia\r\n"
